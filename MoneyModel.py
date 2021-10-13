@@ -17,7 +17,15 @@ class MoneyAgent(Agent):
         self.wealth = 1
 
     def step(self):
-      pass
+      self.move()
+
+    def move(self):
+        possible_steps = self.model.grid.get_neighborhood(
+          self.pos,
+          moore=False,
+          include_center=True)
+        new_position = self.random.choice(possible_steps)
+        self.model.grid.move_agent(self, new_position)
 
 
 class MoneyModel(Model):
