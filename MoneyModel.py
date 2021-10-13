@@ -14,6 +14,7 @@ class MoneyAgent(Agent):
     """An agent with hopes, dreams, and a mysterious past."""
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
+        self.wealth = 1
 
     def step(self):
       pass
@@ -22,8 +23,19 @@ class MoneyAgent(Agent):
 class MoneyModel(Model):
     """Our model--a home for our agents :)"""
     def __init__(self, N, width, height):
+        self.num_agents = N
+        self.grid = MultiGrid(width, height, True)
         # A physical world to place our agents in 
         self.grid = MultiGrid(width, height, True)
+        self.schedule = RandomActivation(self)
+        self.running = True
+        # Create agents
+        for i in range(self.num_agents):
+            a = MoneyAgent(i, self)
+            self.schedule.add(a)
+            x = self.random.randrange(self.grid.width)
+            y = self.random.randrange(self.grid.height)
+            self.grid.place_agent(a, (x, y))
 
         # Some metrics we'll measure about our model
         self.datacollector = DataCollector(
