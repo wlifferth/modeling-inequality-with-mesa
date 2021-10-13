@@ -8,7 +8,7 @@ def agent_portrayal(agent):
     portrayal = {
       "Shape": "circle",
       "Filled": "true",
-      "r": 1}
+      "r": agent.wealth + 0.5}
     if agent.wealth > 2:
       portrayal["Color"] = "red"
       portrayal["Layer"] = 0
